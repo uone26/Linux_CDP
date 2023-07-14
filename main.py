@@ -29,7 +29,7 @@ print("您的username: user")
 print("您的password: root")
  
 #CRP = "DISPLAY= /opt/google/chrome-remote-desktop/start-host --code=\"4/0AX4XfWgDWCk-7bUvdT1ZtFvBSnHnZQXwXobmzNL2nBZDDWIowheHLetSF2wvarJ5VWVEHA\" --redirect-url=\"https://remotedesktop.google.com/_/oauthredirect\" --name=$(hostname)" #@param {type:"string"}
-print("請輸入Debian Linux鏈接")
+print("請輸入CDP Linux鏈接")
 CRP = getpass.getpass()
 
 #@markdown Pin碼已預設為: 123456
