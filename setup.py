@@ -1,39 +1,7 @@
-#@title **Linux遠端桌面**
-#@markdown 過程需要4~5分鐘
- 
 import os
 import subprocess
 import random, string, urllib.request, json, getpass
- 
-#@markdown  登入遠端桌面:https://remotedesktop.google.com/headless
-
 import os
-
-username = "user"
-password = "root"
-
-# Creation of user
-os.system(f"useradd -m {username}")
- 
-# Add user to sudo group
-os.system(f"adduser {username} sudo")
-    
-# Set password of user to 'root'
-os.system(f"echo '{username}:{password}' | sudo chpasswd")
- 
-# Change default shell from sh to bash
-os.system("sed -i 's/\/bin\/sh/\/bin\/bash/g' /etc/passwd")
- 
-print("用戶創建成功!")
-print("您的username: user")
-print("您的password: root")
- 
-#CRP = "DISPLAY= /opt/google/chrome-remote-desktop/start-host --code=\"4/0AX4XfWgDWCk-7bUvdT1ZtFvBSnHnZQXwXobmzNL2nBZDDWIowheHLetSF2wvarJ5VWVEHA\" --redirect-url=\"https://remotedesktop.google.com/_/oauthredirect\" --name=$(hostname)" #@param {type:"string"}
-print("請輸入CDP Linux鏈接")
-CRP = getpass.getpass()
-
-#@markdown Pin碼已預設為: 123456
-Pin = 123456
 
 class CRD:
     def __init__(self):
@@ -41,7 +9,6 @@ class CRD:
         self.installCRD()
         self.installDesktopEnvironment()
         self.installGoogleChorme()
-        self.finish()
  
     @staticmethod
     def installCRD():
@@ -66,22 +33,9 @@ class CRD:
         subprocess.run(["wget", "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb"], stdout=subprocess.PIPE)
         subprocess.run(["dpkg", "--install", "google-chrome-stable_current_amd64.deb"], stdout=subprocess.PIPE)
         subprocess.run(['apt', 'install', '--assume-yes', '--fix-broken'], stdout=subprocess.PIPE)
- 
-    @staticmethod
-    def finish():
-        os.system(f"adduser {username} chrome-remote-desktop")
-        command = f"{CRP} --pin={Pin}"
-        os.system(f"su - {username} -c '{command}'")
-        os.system("service chrome-remote-desktop start")
-        print("success!")
 
 try:
-    if username:
-        if CRP == "":
-            print("請輸入鏈接")
-        elif len(str(Pin)) < 6:
-            print("Pin碼必須大於6位數")
-        else:
-            CRD()
+    CRD()
+    print("全部安裝完成!")
 except NameError as e:
-    print("未找到用戶 請先創建用戶")
+    print(e)
